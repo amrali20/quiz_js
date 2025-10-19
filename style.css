@@ -1,0 +1,179 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #654aaf, #6e4ba5);
+  color: #333;
+}
+
+.card {
+  background: linear-gradient(135deg, #8472bb, #ad82f1);
+  width: 90%;
+  max-width: 400px;
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  transition: 0.3s ease;
+}
+
+.icon {
+  width: 70px;
+  height: 70px;
+  margin-bottom: 1rem;
+}
+
+.title {
+  font-size: 1.8rem;
+  color: #2b1055;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  color: white;
+  margin-bottom: 2rem;
+}
+
+.student-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.student-form input {
+  padding: 0.9rem;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 1rem;
+  outline: none;
+  transition: 0.3s;
+}
+
+.student-form input:focus {
+  border-color: #6c4ed2;
+  box-shadow: 0 0 8px rgba(108, 78, 210, 0.3);
+}
+
+.start-btn {
+  background: linear-gradient(135deg, #6c4ed2, #4b2ca0);
+  color: #fff;
+  border: none;
+  padding: 0.9rem 2rem;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: 0.3s;
+}
+
+.start-btn:hover {
+  background: linear-gradient(135deg, #7a5cf5, #5631b8);
+  transform: translateY(-2px);
+}
+
+.quiz-screen {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.welcome-text {
+  font-size: 24px;
+  margin-bottom: 25px;
+}
+
+.question-container {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 15px;
+  width: 100%;
+  max-width: 350px;
+}
+.question-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-bottom: 1.5rem;
+}
+.answer-btn,
+.skip-btn {
+  background: linear-gradient(135deg, #6c4ed2, #4b2ca0);
+  color: #fff;
+  border: none;
+  padding: 0.9rem 2rem;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: 0.3s;
+}
+
+.skip-btn {
+  background: linear-gradient(135deg, #a1c848, #242907);
+}
+@media (max-width: 768px) {
+  .card {
+    width: 85%;
+    padding: 35px 25px;
+  }
+
+  .icon {
+    width: 70px;
+  }
+
+  .title {
+    font-size: 26px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+  }
+
+  .student-form input {
+    width: 85%;
+    margin: 0 auto;
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .start-btn {
+    width: 60%;
+    padding: 10px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    width: 90%;
+    padding: 25px 15px;
+    border-radius: 15px;
+  }
+
+  .title {
+    font-size: 22px;
+  }
+
+  .subtitle {
+    font-size: 13px;
+  }
+
+  .student-form input {
+    width: 90%;
+    padding: 9px;
+    font-size: 13px;
+  }
+
+  .start-btn {
+    width: 70%;
+    font-size: 13px;
+  }
+}

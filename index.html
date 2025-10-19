@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz App</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="card start-screen">
+      <img src="image/quiz_icon.svg" alt="Quiz Icon" class="icon" />
+
+      <h1 class="title">Quiz App</h1>
+      <p class="subtitle">Test your knowledge with this app!</p>
+
+      <form class="student-form">
+        <input
+          type="text"
+          class="student-name"
+          placeholder="Enter your name"
+          required
+        />
+        <input
+          type="text"
+          class="student-id"
+          placeholder="Enter your ID"
+          required
+        />
+      </form>
+
+      <button class="start-btn">Start Now!</button>
+    </div>
+
+    <div class="card quiz-screen hidden"></div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
