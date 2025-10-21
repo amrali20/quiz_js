@@ -24,7 +24,17 @@ body {
   text-align: center;
   transition: 0.3s ease;
 }
-
+.hidden {
+  display: none;
+}
+.center {
+  align-items: center;
+  justify-content: center;
+}
+.center .skip-btn,
+.center .confirm-btn {
+  width: 100%;
+}
 .icon {
   width: 70px;
   height: 70px;
@@ -63,7 +73,7 @@ body {
   box-shadow: 0 0 8px rgba(108, 78, 210, 0.3);
 }
 
-.start-btn {
+.btn {
   background: linear-gradient(135deg, #6c4ed2, #4b2ca0);
   color: #fff;
   border: none;
@@ -72,6 +82,20 @@ body {
   cursor: pointer;
   font-size: 1rem;
   transition: 0.3s;
+}
+.start-btn,
+.show_answers {
+  background: linear-gradient(135deg, #6c4ed2, #4b2ca0);
+  color: #fff;
+  border: none;
+  padding: 0.9rem 2rem;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: 0.3s;
+}
+.show_answers {
+  margin-top: 2rem;
 }
 
 .start-btn:hover {
@@ -90,22 +114,26 @@ body {
   font-size: 24px;
   margin-bottom: 25px;
 }
-
-.question-container {
+.container {
   background: rgba(255, 255, 255, 0.1);
   padding: 20px;
   border-radius: 15px;
   width: 100%;
   max-width: 350px;
-}
-.question-container {
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
   margin-bottom: 1.5rem;
 }
+.btn_pag {
+  display: flex;
+  /* // flex-direction: column; */
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
 .answer-btn,
-.skip-btn {
+.skip-btn,
+.confirm-btn {
   background: linear-gradient(135deg, #6c4ed2, #4b2ca0);
   color: #fff;
   border: none;
@@ -115,9 +143,20 @@ body {
   font-size: 1rem;
   transition: 0.3s;
 }
+.selected {
+  background: linear-gradient(135deg, #4616e4, #15063e);
+}
 
-.skip-btn {
+.skip-btn,
+.confirm-btn {
   background: linear-gradient(135deg, #a1c848, #242907);
+}
+
+.warning {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 @media (max-width: 768px) {
   .card {
