@@ -7,6 +7,7 @@ class User {
     this.answers = new Array(10).fill("");
     this.data = [];
     this.questions = [];
+    this.marked = new Array(10).fill(false);
     this.submitted = false;
   }
 
@@ -57,17 +58,24 @@ class QuizApp {
   generateQuestionHTML(index, questionObj, answered = false) {
     const hidden = index === 0 ? "hidden" : "";
     const isLast = index === 9;
-    const label = isLast ? "Submit" : "Confirm";
+    const label = isLast ? "Submit" : "Next";
     const nextLabel = answered ? "Next" : label;
     const center = hidden === "hidden" || (isLast && answered) ? "center" : "";
+    const marked = this.user.marked[this.user.currentIndex];
 
     return `
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="bookmark ${
+      marked ? "active" : ""
+    }">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
+</svg>
+
       <div class="question-container container">
-        <p class="question">${index + 1}: ${questionObj.questionText}</p>
+        <p class="question"> ${index + 1}: ${questionObj.questionText}</p>
         ${questionObj.allAnswers
           .map((ans) => `<button class="answer-btn btn">${ans}</button>`)
           .join("")}
-        <div class="btn_pag ${center}">
+        <div class="btn_pag ${center} ">
           <button class="skip-btn ${hidden} btn">Back</button>
           <button class="confirm-btn ${
             isLast && answered ? "hidden" : ""
@@ -103,33 +111,38 @@ class QuizApp {
   }
 
   renderQuestion() {
-    const { currentIndex, questions, answers } = this.user;
+    const { currentIndex, questions, answers, marked } = this.user;
     this.quizScreen.innerHTML = this.generateQuestionHTML(
       currentIndex,
       questions[currentIndex]
     );
-
+    const bookmarkBtn = this.quizScreen.querySelector(".bookmark");
     const answerBtns = this.quizScreen.querySelectorAll(".answer-btn");
     const backBtn = this.quizScreen.querySelector(".skip-btn");
     const confirmBtn = this.quizScreen.querySelector(".confirm-btn");
     let selected = null;
 
+    bookmarkBtn.addEventListener("click", () => {
+      bookmarkBtn.classList.toggle("active");
+      marked[currentIndex] = bookmarkBtn.classList.contains("active");
+      this.user.save();
+    });
+
     answerBtns.forEach((btn) => {
       if (btn.textContent === answers[currentIndex])
         btn.classList.add("selected");
+
       btn.addEventListener("click", () => {
         answerBtns.forEach((b) => b.classList.remove("selected"));
         selected = btn.textContent;
         btn.classList.add("selected");
+        confirmBtn.classList.remove("hidden");
+        this.user.answers[currentIndex] = selected;
+        this.user.save();
       });
     });
 
     confirmBtn.addEventListener("click", () => {
-      if (selected) {
-        this.user.answers[currentIndex] = selected;
-        this.user.save();
-      }
-
       if (currentIndex < 9) {
         this.user.currentIndex++;
         this.user.save();
@@ -207,40 +220,29 @@ class QuizApp {
     }
   }
   renderWarning() {
-    const { answers } = this.user;
+    const { questions } = this.user;
     this.warningScreen.style.display = "block";
     this.quizScreen.style.display = "none";
 
-    const unanswered = answers
-      .map((a, i) =>
-        !a
-          ? `<button class="answer-btn not_answered btn" data-ind="${i}">Question ${
-              i + 1
-            }</button>`
-          : ""
-      )
+    const question = questions
+      .map((el, i) => {
+        let words = el.questionText.split(" ");
+        let firstThree = words.slice(0, 4);
+        let result = firstThree.join(" ");
+        return `<button class="answer-btn summarybtn btn ${
+          this.user.marked[i] ? "summarybtn_marked" : ""
+        }" data-ind="${i}"> ${i + 1}: ${result}...?</button>`;
+      })
       .join("");
 
-    let markup;
-    if (unanswered.includes("Question")) {
-      markup = `
+    const markup = `
         <div class="container warning-container">
-          <p class="question">Some questions are not answered. Click below to return or YES to submit.</p>
-          ${unanswered}
-          <button class="yes btn">YES</button>
-        </div>
-      `;
-    } else {
-      markup = `
-        <div class="container warning-container">
-          <p class="question">All questions answered. Click YES to submit or BACK to review.</p>
-          <button class="yes btn">YES</button>
-          <button class="cancel btn">BACK</button>
-        </div>
-      `;
-    }
+          <p class="question">Click on question button  below to return or submit.</p>
+          ${question}
+          <button class="submit btn">Submit</button>
+        </div>`;
     this.warningScreen.innerHTML = markup;
-    this.warningScreen.querySelectorAll(".not_answered").forEach((btn) => {
+    this.warningScreen.querySelectorAll(".summarybtn").forEach((btn) => {
       btn.addEventListener("click", () => {
         this.user.currentIndex = +btn.dataset.ind;
         this.user.save();
@@ -250,20 +252,11 @@ class QuizApp {
       });
     });
 
-    const yesBtn = this.warningScreen.querySelector(".yes");
+    const yesBtn = this.warningScreen.querySelector(".submit");
     yesBtn.addEventListener("click", () => {
       this.user.currentIndex = 0;
       this.showResult();
     });
-    const cancelBtn = this.warningScreen.querySelector(".cancel");
-    if (cancelBtn)
-      cancelBtn.addEventListener("click", () => {
-        this.user.currentIndex = 0;
-        this.user.save();
-        this.warningScreen.style.display = "none";
-        this.quizScreen.style.display = "block";
-        this.renderQuestion();
-      });
   }
 }
 new QuizApp();

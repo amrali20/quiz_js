@@ -35,6 +35,10 @@ body {
 .center .confirm-btn {
   width: 100%;
 }
+.center1 .skip-btn,
+.center1 .confirm-btn {
+  width: 100%;
+}
 .icon {
   width: 70px;
   height: 70px;
@@ -144,12 +148,14 @@ body {
   transition: 0.3s;
 }
 .selected {
-  background: linear-gradient(135deg, #4616e4, #15063e);
+  background: linear-gradient(135deg, #290e82, #15063e);
+  outline: 3px solid rgb(16, 194, 16);
 }
 
 .skip-btn,
-.confirm-btn {
-  background: linear-gradient(135deg, #a1c848, #242907);
+.confirm-btn,
+.submit {
+  background: linear-gradient(135deg, #0b4d36, #095431);
 }
 
 .warning {
@@ -158,6 +164,33 @@ body {
   align-items: center;
   justify-content: center;
 }
+
+.question_box {
+  display: flex;
+  gap: 0.8rem;
+}
+.bookmark {
+  position: absolute;
+  width: 32px;
+  height: 42px;
+  top: 12px;
+  left: 18px;
+  color: rgb(63, 62, 62);
+}
+.bookmark.active {
+  fill: #2b088b;
+  color: rgb(63, 62, 62);
+  transform: scale(1.1);
+}
+.quiz-screen {
+  position: relative;
+}
+.summarybtn {
+  text-align: left;
+  padding: 14px;
+  font-size: 16px;
+}
+
 @media (max-width: 768px) {
   .card {
     width: 85%;
@@ -189,7 +222,10 @@ body {
     font-size: 14px;
   }
 }
-
+.summarybtn_marked {
+  box-shadow: inset 16px 0 0#2b088b;
+  padding-left: 18px;
+}
 @media (max-width: 480px) {
   .card {
     width: 90%;
